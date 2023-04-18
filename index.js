@@ -5,7 +5,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Route handler for GET /hello
-app.get('/hello', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
