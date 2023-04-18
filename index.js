@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 // Create a server to receive POST requests from SNS
 const server = http.createServer((req, res) => {
-  if (req.method === 'POST') {
+  if (req.method === 'POST' && req.url === '/') { // Route for handling POST requests to the root URL
     let body = '';
     req.on('data', (chunk) => {
       body += chunk;
@@ -20,7 +20,11 @@ const server = http.createServer((req, res) => {
         res.end('Bad Request');
       }
     });
-  } else {
+  } else if (req.method === 'GET' && req.url === '/hello') { // Route for handling GET requests to /hello
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World!');
+  } else { // Default route handler for all other requests
     res.statusCode = 405;
     res.end('Method Not Allowed');
   }
